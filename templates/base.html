@@ -1,0 +1,88 @@
+{% extends "templates/bootstrap_base.html" %}
+
+{% block title %} {{ title if title else 'Stephen Sloat' }} {% endblock %}
+
+{% block html_attribs %} lang="en" {% endblock %}
+
+{% block metas %}
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  {{super()}}
+
+  <meta name="description" content="My Website">
+  <meta name="author" content="Stephen Sloat">
+{% endblock %}
+
+{% block navbar %}
+  <div class="navbar navbar-inverse"><!-- navbar-fixed-top -->
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Sloat</a>
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+          <li{% block navbar_home %}{% endblock %}><a href="/">Home</a></li>
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Finances<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="/budget/budgets">Budgets</a></li>
+              <li><a href="/transaction/upload_transactions">Upload Transactions</a></li>
+              <li><a href="/transaction/monthly_breakdown">Monthly Breakdown</a></li>
+              <li><a href="/transaction/manual_entry">Manual Entry</a></li>
+              <li><a href="/pattern/patterns">Patterns</a></li>
+            </ul>
+          </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              <span class="glyphicon glyphicon-user"></span> User <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              {% if user %}
+              <li><a href={{user_url}}>Logout</a></li>
+              {% else %}
+              <li><a href={{user_url}}><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+              {% endif %}
+             </ul>
+          </li>
+          <li{% block navbar_about %}{% endblock %}><a href="/about">About</a></li>
+        </ul>
+      </div>
+    </div><!--/.container-fluid -->
+  </div>
+{% endblock %}
+
+{% block content %}
+  <!-- Main component for a primary marketing message or call to action -->
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-1"> </div>
+      <div class="col-md-10 main">
+
+      {% block mainpane %} {% endblock %}
+      </div>
+      <div class="col-md-1"> </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  {{super()}}
+  <!-- datepicker https://api.jqueryui.com/datepicker -->
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script>
+    $.datepicker.setDefaults({dateFormat: "yy-mm-dd"})
+    $(function() {
+      $( ".datepicker" ).datepicker();
+    });
+  </script>
+{% endblock %}
+
+

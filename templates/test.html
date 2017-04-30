@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block navbar_about %} class="active" {% endblock %}
+{% block mainpane %}
+<label class="btn btn-default btn-file">
+    Browse <input id="fileinput" type="file" style="display: none;">
+</label>
+<p id="output"></p>
+{% endblock %}
+{% block scripts %}
+  {{super()}}
+<script>
+$(document).ready(function(){
+  $("input#fileinput").change(function(){
+    var reader = new FileReader();
+
+    reader.onload = function(){
+      $.post("{{url_for('post_test')}}", { text: reader.result },
+        function(data, status) {
+          $("p#output").text(data.response);
+        }
+      );
+    }
+    reader.readAsText($(this)[0].files[0]);
+  });
+});
+</script>
+{% endblock %}
+

@@ -1,0 +1,11 @@
+{% extends "templates/base.html" %}
+{% block navbar_home %} class="active" {% endblock %}
+{% block mainpane %}
+  {% if user %}
+    <h2>Hi, {{ user.nickname() }}!</h2>
+    <p><a href="{{ user_url }}">Logout</a></p>
+  {% else %}
+    <h2>Welcome Stranger.  Want to try logging in?</h2>
+  {% endif %}
+{% endblock %}
+
